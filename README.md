@@ -1,109 +1,137 @@
-# MetaTimeChanger
+# MetaTimeChanger v2.0 - Smart Extractor Edition
 
-MetaTimeChanger adalah alat untuk mengubah metadata dan tanggal modifikasi file video serta gambar secara otomatis berdasarkan format nama file, atau secara manual dengan memilih tanggal untuk setiap file.
+MetaTimeChanger adalah alat **cerdas** untuk mengubah metadata dan tanggal modifikasi file video serta gambar. Versi 2.0 memiliki kemampuan **smart pattern extraction** yang bisa mengekstrak tanggal dari berbagai format nama file, tidak peduli prefix atau suffix!
 
-## 🎯 **Latar Belakang**
-Saya sering melakukan **backup rutin setiap akhir bulan** dengan memindahkan file foto dan video dari HP ke laptop. Namun, setelah melakukan **proses kompresi menggunakan HandBrake atau software lainnya**, saya mengalami masalah di mana **date modified dan metadata berubah menjadi tanggal hari ini**.
+## 🎯 **Fitur Utama v2.0**
 
-HP saya (Redmi) memiliki fitur penamaan file yang rapi, seperti:
-- `IMG_YYYYMMDD_id.jpg`
-- `VID_YYYYMMDD_id.mp4`
+### 🧠 **Smart Pattern Detection**
+Program sekarang bisa mengekstrak pola `YYYYMMDD_HHMMSS` dari **mana saja** dalam nama file:
+- ✅ `lv_0_20231225143045.mp4`
+- ✅ `holiday_20231225_143045(1).mp4`  
+- ✅ `YYYYMMDD_HHMMSS_backup.mp4`
+- ✅ `video_2023-12-25_14-30-45_final.mp4`
 
-Untuk mengatasi masalah ini, saya berpikir untuk membuat **program yang dapat mengganti date modified dan metadata file setelah dikompres**, agar sesuai dengan tanggal asli berdasarkan format nama file.
+### 🔧 **Dual Engine Support**
+- **ExifTool**: Untuk foto & video (cepat, metadata only)
+- **FFmpeg**: Untuk video (lebih compatible, mungkin re-encode)
+- **Auto Selection**: Pilih otomatis tool terbaik
 
-Alhamdulillah, akhirnya program ini selesai dan bisa digunakan oleh siapa saja yang mengalami masalah serupa. 😊
+### 🤖 **Interactive Processing**
+- **Smart Suggestions**: Generate saran tanggal dari angka dalam filename
+- **User Confirmation**: Konfirmasi sebelum update metadata
+- **Multiple Choices**: Pilih antara tanggal terdeteksi, saran lain, atau input manual
 
-## 📥 **Persyaratan**
-1. **Python** harus terinstall di sistem Anda. Unduh di [Python.org](https://www.python.org/downloads/)
-2. **FFmpeg** diperlukan untuk memproses metadata. Unduh dari situs resminya:
-   - 🔗 [https://ffmpeg.org/download.html](https://ffmpeg.org/download.html)
-   - Setelah diunduh, tambahkan `ffmpeg.exe` ke dalam sistem PATH agar bisa digunakan oleh skrip ini.
+## 🚀 **Cara Menggunakan v2.0**
 
-## 📁 **Struktur File**
+### **Menu Utama Baru:**
 ```
-📂 MetaTimeChanger
-├── 📝 README.md  # Dokumentasi ini
-├── 📜 MetaTimeChanger.py  # Program utama
-└── ⚡ start.bat  # Jalankan program dengan sekali klik
+=== SMART METADATA EXTRACTOR ===
+[1] 📹 Update Video Files (Mode Cerdas)
+[2] 📸 Update Photo Files (Mode Cerdas)  
+[3] 🧠 Test Smart Extraction
+[4] ⚙️ Settings
+[5] 🚪 Exit
 ```
 
-## 🚀 **Cara Menggunakan**
+### **Mode Pemrosesan:**
+1. **Otomatis Cerdas** (Rekomendasi):
+   - Ekstrak otomatis dari nama file
+   - Konfirmasi ke user sebelum update
+   - Tanya user jika format tidak sesuai
 
-MetaTimeChanger dapat dijalankan di **Windows** dan **Android (Termux)**.
+2. **Manual Interaktif**:
+   - Tanya setiap file dengan saran cerdas
+   - Multiple choice options
+   - Skip jika diperlukan
+
+## 📁 **Format File yang Didukung**
+
+### **Standard Formats:**
+- `VID_YYYYMMDD_HHMMSS.mp4`
+- `IMG_YYYYMMDD_HHMMSS.jpg`
+
+### **Smart Formats (Baru!):**
+- `lv_0_20231225143045.mp4` (Xiaomi screen recording)
+- `PXL_20231225_143045.jpg` (Google Pixel)
+- `IMG-20231225-WA143045.jpg` (WhatsApp)
+- `Screenshot_20231225-143045.png` (Samsung)
+- `holiday_20231225_143045(1).mp4` (Renamed files)
+- `2023.12.25_14.30.45_vacation.jpg` (Dotted format)
+
+### **Separator Variations:**
+- `YYYYMMDD_HHMMSS` (underscore)
+- `YYYYMMDDHHMMSS` (no separator)
+- `YYYY-MM-DD HH-MM-SS` (dash)
+- `YYYY.MM.DD HH.MM.SS` (dot)
+
+## 🛠 **Persyaratan v2.0**
+
+### **Wajib:**
+1. **Python 3.6+**
+2. **ExifTool** (untuk metadata lengkap)
+
+### **Opsional (tapi direkomendasikan):**
+3. **FFmpeg** (untuk video processing yang lebih baik)
+
+### **Python Libraries:**
+```bash
+pip install colorama
+```
+
+## 📱 **Android (Termux) Support**
+
+### **Instalasi Termux:**
+```bash
+pkg update && pkg upgrade
+pkg install python ffmpeg git
+pip install colorama
+```
+
+### **Catatan Android:**
+- Tidak bisa mengubah **date created**, hanya **date modified** dan metadata
+- Gunakan `termux-setup-storage` untuk akses file
+- FFmpeg di Termux support sebagian besar format
+
+## 🐛 **Troubleshooting v2.0**
+
+### **Jika tanggal tidak terdeteksi:**
+1. Program akan **bertanya ke user** (tidak langsung skip)
+2. Pilih **"Input tanggal manual"** untuk masukkan manual
+3. Atau **"Skip file ini"** untuk lewati
+
+### **Jika metadata tidak update:**
+1. Cek apakah **ExifTool terinstall** dengan `exiftool -ver`
+2. Coba **ganti tool** ke FFmpeg atau Basic mode
+3. Pastikan **file tidak sedang digunakan** oleh program lain
+
+## 🔄 **Migrasi dari v1.x**
+
+### **Perubahan Perilaku:**
+- **Tidak langsung skip** file dengan format tidak sesuai
+- **Lebih banyak format** yang didukung
+- **Interaktif** - konfirmasi user diperlukan
+
+### **New Features:**
+- Smart pattern extraction
+- Device-specific format recognition  
+- Dual engine (ExifTool + FFmpeg)
+- Interactive user interface
+
+## 🤝 **Kontribusi v2.0**
+
+### **Format Baru yang Mau Ditambahkan?**
+1. Fork repository
+2. Tambahkan pattern di fungsi `smart_extract_datetime()`
+3. Test dengan file contoh
+4. Buat pull request
+
+### **Bug Reports:**
+1. Sertakan **nama file contoh**
+2. **Tanggal yang diharapkan**
+3. **Output error** (jika ada)
 
 ---
 
-## 🖥️ **Cara Menggunakan di Windows**
+📌 **MetaTimeChanger v2.0 - Lebih Cerdas, Lebih Fleksibel, Lebih User-Friendly!**
 
-### **1️⃣ Instalasi**
-1. **Unduh & Ekstrak** repository ini.
-2. **Pastikan** Python dan FFmpeg sudah terinstall dengan benar.
-3. **Jalankan `start.bat`** untuk memulai program.
-
-### **2️⃣ Menu Utama**
-Saat program berjalan, Anda akan melihat menu berikut:
-```
-[1] Change Date Metadata Videos
-[2] Change Date Metadata Images
-[3] Exit
-```
-Pilih opsi sesuai kebutuhan Anda.
-
-### **3️⃣ Mode Otomatis & Manual**
-Setelah memilih kategori (Video atau Gambar), Anda bisa memilih metode pemrosesan:
-```
-[1] Automatic Based On Format
-[2] Manual Formatting
-[3] Back
-```
-- **Automatic Based On Format** → Menggunakan format nama file (`VID_YYYYMMDD_Id.mp4` atau `IMG_YYYYMMDD_Id.jpg/png/jpeg`).
-- **Manual Formatting** → Anda harus memasukkan tanggal secara manual untuk setiap file.
-
-### **4️⃣ Output File**
-- File asli di folder input **tidak akan dihapus**.
-- File yang sudah diperbarui akan **disalin ke folder output** yang Anda tentukan.
-
-## 🛠 **Catatan Penting**
-- Pastikan **folder input tidak kosong** sebelum menjalankan program.
-- Jika terjadi error, cek apakah path FFmpeg sudah benar dan file yang diproses sesuai dengan format yang didukung.
-
----
-
-## 📱 **Cara Menggunakan di HP (Termux)**
-Jika Anda ingin menjalankan MetaTimeChanger di Android, Anda bisa menggunakan **Termux**.
-
-### **1️⃣ Instalasi Termux & Dependensi**
-1. **Unduh dan install Termux** dari Play Store atau F-Droid.
-2. **Buka Termux** dan jalankan perintah berikut untuk menginstal dependensi:
-   ```bash
-   pkg update && pkg upgrade
-   pkg install python ffmpeg git
-   ```
-3. **Clone repository ini** dan masuk ke direktori MetaTimeChanger:
-   ```bash
-   git clone https://github.com/username/MetaTimeChanger.git
-   cd MetaTimeChanger
-   ```
-4. **Instal pustaka Python yang diperlukan:**
-   ```bash
-   pip install colorama
-   ```
-
-### **2️⃣ Menjalankan Program**
-1. Jalankan skrip Python:
-   ```bash
-   python MetaTimeChanger.py
-   ```
-2. Ikuti instruksi pada layar, mirip dengan versi Windows.
-
-### **3️⃣ Catatan Penting untuk Pengguna Termux**
-- Termux tidak bisa mengubah **date created**, hanya **date modified** dan metadata.
-- Pastikan FFmpeg dapat dijalankan dengan mengetik `ffmpeg` di Termux.
-- Jika ada masalah izin akses file, gunakan `termux-setup-storage`.
-
-## 🤝 **Kontribusi**
-Jika Anda ingin mengembangkan atau meningkatkan program ini, silakan **fork repository ini** dan buat **pull request**!
-
----
-📌 **Dibuat dengan ❤️ untuk mempermudah pengelolaan metadata file media Anda!**
-
+Dibuat dengan ❤️ untuk mempermudah pengelolaan metadata file media Anda, terutama setelah proses backup dan kompresi!
