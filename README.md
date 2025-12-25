@@ -1,4 +1,6 @@
-# MetaTimeChanger v2.0 - Smart Extractor Edition
+<h1 align="center"> MetaTimeChanger v2.0 - Smart Extractor Edition </h1>
+   
+<p align="center"> <img src="https://raw.githubusercontent.com/DeJavi08/MetaTimeChanger/refs/heads/main/ss.png" alt="Digital Literacy Banner" width="300px" /> </p> <p align="center"> <img src="https://img.shields.io/badge/version-2.0-blue.svg" /> <img src="https://img.shields.io/badge/tool-Python%203-orange.svg" /> <img src="https://img.shields.io/badge/license-educational-lightgrey.svg" /> <img src="https://img.shields.io/badge/status-active-brightgreen.svg" /> </p> <p align="center"> </p>
 
 MetaTimeChanger adalah alat **cerdas** untuk mengubah metadata dan tanggal modifikasi file video serta gambar. Versi 2.0 memiliki kemampuan **smart pattern extraction** yang bisa mengekstrak tanggal dari berbagai format nama file, tidak peduli prefix atau suffix!
 
